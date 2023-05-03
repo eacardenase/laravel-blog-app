@@ -7,7 +7,16 @@ use Illuminate\Http\Request;
 class ExampleController extends Controller
 {
     public function homePage() {
-        return '<h1>Home page!</h1><a href="/about">Back to about</a>';
+        // imagine we loaded data from the database
+        $myName = "Edwin";
+        $catName = 'Mango';
+        $animals = ["Mango", "Apollo", "Coco"];
+
+        return view('homepage', [
+            'name' => $myName,
+            'catName' => $catName,
+            'animalsArray' => $animals
+        ]);
     }
 
     public function aboutPage() {
