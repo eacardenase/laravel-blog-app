@@ -16,6 +16,8 @@ class UserController extends Controller
             'password' => ['required', 'min:8', 'confirmed']
         ]);
 
+        $incomingField['password'] = bcrypt($incomingField['password']);
+
         User::create($incomingField);
 
         return "Hello from register function";
