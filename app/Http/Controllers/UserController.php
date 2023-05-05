@@ -17,10 +17,11 @@ class UserController extends Controller
         ]);
 
         $incomingField['password'] = bcrypt($incomingField['password']);
+        $user = User::create($incomingField);
 
-        User::create($incomingField);
+        auth()->login($user); // log user in after registration
 
-        return "Hello from register function";
+        return redirect('/')->with('success', 'Thank you for creating an account.');
     }
 
     public function login(Request $request)
@@ -36,9 +37,9 @@ class UserController extends Controller
         ])) {
             $request->session()->regenerate(); // creates session cookie
 
-            return 'Congrats!!!';
+            return redirect('/')->with('success', 'You have successfully logged in.');
         } else {
-            return 'Sorry :c';
+            return redirect('/')->with('failure', 'Invalid login.');
         }
     }
 
@@ -46,7 +47,7 @@ class UserController extends Controller
     {
         auth()->logout();
 
-        return 'You are now logged out';
+        return redirect('/')->with('success', 'You are now logged out.');
     }
 
     public function showCorrectHomePage()
