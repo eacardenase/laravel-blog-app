@@ -22,4 +22,32 @@ class UserController extends Controller
 
         return "Hello from register function";
     }
+
+    public function login(Request $request)
+    {
+        $incomingFields = $request->validate([
+            'loginusername' => 'required',
+            'loginpassword' => 'required'
+        ]);
+
+        if (auth()->attempt([
+            'username' => $incomingFields['loginusername'],
+            'password' => $incomingFields['loginpassword']
+        ])) {
+            $request->session()->regenerate(); // creates session cookie
+
+            return 'Congrats!!!';
+        } else {
+            return 'Sorry :c';
+        }
+    }
+
+    public function showCorrectHomePage()
+    {
+        if (auth()->check()) { // checks if user is authenticated
+            return view('homepage-feed');
+        } else {
+            return view('homepage');
+        }
+    }
 }
