@@ -42,6 +42,13 @@ class UserController extends Controller
         }
     }
 
+    public function logout()
+    {
+        auth()->logout();
+
+        return 'You are now logged out';
+    }
+
     public function showCorrectHomePage()
     {
         if (auth()->check()) { // checks if user is authenticated
